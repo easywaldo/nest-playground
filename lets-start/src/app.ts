@@ -52,6 +52,24 @@ app.get('/cats/:id', (req, res) => {
 });
 
 
+// Create URL
+app.post('/cats', (req, res) => {
+    try {
+        const data = req.body;
+        console.log(data);
+        res.status(200).send({
+            success: true,
+            data: {},
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}/`);
 });
