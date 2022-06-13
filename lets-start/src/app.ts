@@ -16,7 +16,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
 app.get('/cats/foo', (req, res, next) => {
     console.log(req.rawHeaders);
     res.send({foo: Cat[0]});
-})
+});
 
 app.get('/cats', (req, res) => {
     try {
@@ -31,7 +31,26 @@ app.get('/cats', (req, res) => {
             error: error.message,
         })
     }
-})
+});
+
+app.get('/cats/:id', (req, res) => {
+    try {
+        const params = req.params;
+        const cats = Cat.find((cat) => {
+            return cat.id === params.id;
+        });
+        res.status(200).send({
+            success: true,
+            data: cats
+        })
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            error: error.message,
+        })
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}/`);
